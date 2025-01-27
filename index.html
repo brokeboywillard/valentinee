@@ -55,10 +55,9 @@
       position: absolute;
       width: 30px;
       height: 30px;
-      background-image: url('new-heart.png');
+      background-image: url('https://www.freeiconspng.com/uploads/heart-png-15.png');
       background-size: cover;
       animation: float 5s linear infinite;
-      border: 2px solid red; /* Debugging */
     }
     @keyframes float {
       0% {
@@ -100,6 +99,7 @@
       const result = document.getElementById("result");
       const photos = document.getElementById("photos");
       const music = document.getElementById("music");
+      let heartInterval = null;
 
       valentineBtn.addEventListener("click", () => {
         response.classList.remove("hidden");
@@ -113,17 +113,18 @@
         result.classList.remove("hidden");
         buttons.classList.add("hidden");
         photos.classList.remove("hidden");
-        createHearts();
+        startHearts();
       });
 
       document.getElementById("no-btn").addEventListener("click", () => {
         result.textContent = "Aww, I'll try harder next time! 😢";
         result.classList.remove("hidden");
         buttons.classList.add("hidden");
+        stopHearts();
       });
 
       function createHearts() {
-        const numHearts = 20;
+        const numHearts = 5; // Reduced number of hearts
         for (let i = 0; i < numHearts; i++) {
           const heart = document.createElement("div");
           heart.classList.add("heart");
@@ -135,12 +136,19 @@
             heart.remove();
           });
         }
-
-        setInterval(createHearts, 1000); // Keep generating hearts please
       }
 
-      // Debugging: Test hearts on page load
-      createHearts();
+      function startHearts() {
+        if (!heartInterval) {
+          createHearts(); // Initial batch
+          heartInterval = setInterval(createHearts, 3000); // Every 3 seconds
+        }
+      }
+
+      function stopHearts() {
+        clearInterval(heartInterval);
+        heartInterval = null;
+      }
     });
   </script>
 </body>
