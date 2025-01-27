@@ -11,7 +11,7 @@
       color: #d32f2f;
       text-align: center;
       padding: 20px;
-      overflow: hidden; /* Prevent horizontal scrolling */
+      overflow: hidden;
       position: relative;
     }
     .container {
@@ -58,6 +58,7 @@
       background-image: url('https://www.transparentpng.com/thumb/heart/heart-png-5.png');
       background-size: cover;
       animation: float 5s linear infinite;
+      border: 2px solid red; /* Debugging */
     }
     @keyframes float {
       0% {
@@ -84,13 +85,11 @@
     <p id="result" class="hidden"></p>
   </div>
 
-  <!-- Background music -->
-  <audio id="music" src="path-to-your-audio-file.mp3" loop></audio> <!-- Set the correct path for your music -->
+  <audio id="music" src="path-to-your-audio-file.mp3" loop></audio>
 
-  <!-- Photos -->
   <div id="photos" class="hidden">
-    <img src="https://via.placeholder.com/150" alt="Photo 1"> <!-- Replace with your photo -->
-    <img src="https://via.placeholder.com/150" alt="Photo 2"> <!-- Replace with your photo -->
+    <img src="https://via.placeholder.com/150" alt="Photo 1">
+    <img src="https://via.placeholder.com/150" alt="Photo 2">
   </div>
 
   <script>
@@ -106,7 +105,7 @@
         response.classList.remove("hidden");
         buttons.classList.remove("hidden");
         valentineBtn.classList.add("hidden");
-        music.play(); // Play background music
+        music.play();
       });
 
       document.getElementById("yes-btn").addEventListener("click", () => {
@@ -114,7 +113,7 @@
         result.classList.remove("hidden");
         buttons.classList.add("hidden");
         photos.classList.remove("hidden");
-        createHearts(); // Start floating hearts
+        createHearts();
       });
 
       document.getElementById("no-btn").addEventListener("click", () => {
@@ -124,27 +123,24 @@
       });
 
       function createHearts() {
-        const numHearts = 20; // Number of hearts to generate
+        const numHearts = 20;
         for (let i = 0; i < numHearts; i++) {
           const heart = document.createElement("div");
           heart.classList.add("heart");
-
-          // Randomize position and animation duration
-          heart.style.left = `${Math.random() * 100}vw`; // Random horizontal position
-          heart.style.animationDuration = `${Math.random() * 3 + 2}s`; // Random animation speed
-
-          // Append heart to the body
+          heart.style.left = `${Math.random() * 100}vw`;
+          heart.style.animationDuration = `${Math.random() * 3 + 2}s`;
           document.body.appendChild(heart);
 
-          // Remove heart after animation ends
           heart.addEventListener("animationend", () => {
             heart.remove();
           });
         }
 
-        // Keep generating hearts every 1 second
-        setInterval(createHearts, 1000);
+        setInterval(createHearts, 1000); // Keep generating hearts
       }
+
+      // Debugging: Test hearts on page load
+      createHearts();
     });
   </script>
 </body>
