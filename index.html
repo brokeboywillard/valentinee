@@ -83,30 +83,44 @@
     </div>
     <p id="result" class="hidden"></p>
   </div>
+
+  <!-- Background music -->
   <audio id="music" src="path-to-your-audio-file.mp3" loop></audio> <!-- Set the correct path for your music -->
-  <div id="photos" class="hidden"></div>
+
+  <!-- Photos -->
+  <div id="photos" class="hidden">
+    <img src="https://via.placeholder.com/150" alt="Photo 1"> <!-- Replace with your photo -->
+    <img src="https://via.placeholder.com/150" alt="Photo 2"> <!-- Replace with your photo -->
+  </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById("valentine-btn").addEventListener("click", () => {
-        document.getElementById("response").classList.remove("hidden");
-        document.getElementById("buttons").classList.remove("hidden");
-        document.getElementById("valentine-btn").classList.add("hidden");
-        document.getElementById("music").play();
+      const valentineBtn = document.getElementById("valentine-btn");
+      const response = document.getElementById("response");
+      const buttons = document.getElementById("buttons");
+      const result = document.getElementById("result");
+      const photos = document.getElementById("photos");
+      const music = document.getElementById("music");
+
+      valentineBtn.addEventListener("click", () => {
+        response.classList.remove("hidden");
+        buttons.classList.remove("hidden");
+        valentineBtn.classList.add("hidden");
+        music.play(); // Play background music
       });
 
       document.getElementById("yes-btn").addEventListener("click", () => {
-        document.getElementById("result").textContent = "Yay! You just made me the happiest person! 💖";
-        document.getElementById("result").classList.remove("hidden");
-        document.getElementById("buttons").classList.add("hidden");
-        document.getElementById("photos").classList.remove("hidden");
-        createHearts();
+        result.textContent = "Yay! You just made me the happiest person! 💖";
+        result.classList.remove("hidden");
+        buttons.classList.add("hidden");
+        photos.classList.remove("hidden");
+        createHearts(); // Start floating hearts
       });
 
       document.getElementById("no-btn").addEventListener("click", () => {
-        document.getElementById("result").textContent = "Aww, I'll try harder next time! 😢";
-        document.getElementById("result").classList.remove("hidden");
-        document.getElementById("buttons").classList.add("hidden");
+        result.textContent = "Aww, I'll try harder next time! 😢";
+        result.classList.remove("hidden");
+        buttons.classList.add("hidden");
       });
 
       function createHearts() {
@@ -118,7 +132,7 @@
           // Randomize position and animation duration
           heart.style.left = `${Math.random() * 100}vw`; // Random horizontal position
           heart.style.animationDuration = `${Math.random() * 3 + 2}s`; // Random animation speed
-          
+
           // Append heart to the body
           document.body.appendChild(heart);
 
@@ -127,6 +141,9 @@
             heart.remove();
           });
         }
+
+        // Keep generating hearts every 1 second
+        setInterval(createHearts, 1000);
       }
     });
   </script>
