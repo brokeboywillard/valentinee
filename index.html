@@ -13,6 +13,10 @@
       padding: 20px;
       overflow: hidden;
       position: relative;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     .container {
       background: white;
@@ -20,9 +24,10 @@
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       max-width: 400px;
-      margin: 0 auto;
       position: relative;
       z-index: 1;
+      margin: 20px;
+      transform: translateY(20%);
     }
     h1 {
       font-size: 2em;
@@ -40,9 +45,11 @@
       border-radius: 5px;
       cursor: pointer;
       margin: 10px;
+      transition: transform 0.3s ease;
     }
     button:hover {
       background-color: #b71c1c;
+      transform: scale(1.05);
     }
     .hidden {
       display: none;
@@ -55,23 +62,78 @@
       position: absolute;
       width: 30px;
       height: 30px;
-      background-image: url('https://www.freeiconspng.com/uploads/heart-png-15.png');
+      background-image: url('https://www.freeiconspng.com/uploads/red-heart-png-15.png');
       background-size: cover;
       animation: float 5s linear infinite;
     }
+    .decoration {
+      position: absolute;
+      z-index: 0;
+      max-width: 150px;
+      opacity: 0.8;
+      animation: float 4s ease-in-out infinite;
+    }
+    .left-decoration {
+      left: 10%;
+      top: 20%;
+    }
+    .right-decoration {
+      right: 10%;
+      top: 60%;
+    }
+    .couple-emoji {
+      font-size: 3em;
+      position: absolute;
+      animation: pulse 2s ease infinite;
+    }
+    #photos {
+      margin-top: 30px;
+    }
+    #photos img {
+      margin: 10px;
+      max-width: 200px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .music-upload {
+      margin-top: 20px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 5px;
+    }
+
     @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(10deg); }
+      100% { transform: translateY(0) rotate(0deg); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes heart-float {
       0% {
-        transform: translateY(100vh);
+        transform: translateY(100vh) rotate(0deg);
         opacity: 1;
       }
       100% {
-        transform: translateY(-10vh);
+        transform: translateY(-10vh) rotate(360deg);
         opacity: 0;
       }
     }
   </style>
 </head>
 <body>
+  <img src="https://www.freeiconspng.com/uploads/cute-pink-heart-png-3.png" 
+       class="decoration left-decoration" alt="left decoration">
+  <img src="https://www.freeiconspng.com/uploads/cute-heart-png-22.png" 
+       class="decoration right-decoration" alt="right decoration">
+  <div class="couple-emoji" style="left: 15%; top: 70%;">💑</div>
+  <div class="couple-emoji" style="right: 15%; top: 20%;">💕</div>
+
   <div class="container">
     <h1>Hey Beautiful! 💖</h1>
     <p>I have a very important question for you...</p>
@@ -82,14 +144,23 @@
       <button id="no-btn">No 😢</button>
     </div>
     <p id="result" class="hidden"></p>
+    
+    <!-- Music Upload Section -->
+    <div class="music-upload hidden" id="music-upload-container">
+      <label for="music-upload-input">Add our song:</label>
+      <input type="file" id="music-upload-input" accept="audio/*">
+      <p class="small-text">(MP3 files work best)</p>
+    </div>
   </div>
-
-  <audio id="music" src="path-to-your-audio-file.mp3" loop></audio>
 
   <div id="photos" class="hidden">
-    <img src="https://via.placeholder.com/150" alt="Photo 1">
-    <img src="https://via.placeholder.com/150" alt="Photo 2">
+    <img src="https://i.pinimg.com/originals/2f/3d/aa/2f3daa9c0440a6a8020d387a7e6d6993.png" 
+         alt="Cute bears">
+    <img src="https://www.freeiconspng.com/uploads/love-png-heart-25.png" 
+         alt="Love heart">
   </div>
+
+  <audio id="music"></audio>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -99,13 +170,25 @@
       const result = document.getElementById("result");
       const photos = document.getElementById("photos");
       const music = document.getElementById("music");
+      const musicUploadContainer = document.getElementById("music-upload-container");
+      const musicUploadInput = document.getElementById("music-upload-input");
       let heartInterval = null;
+
+      // Handle music upload
+      musicUploadInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          const objectURL = URL.createObjectURL(file);
+          music.src = objectURL;
+        }
+      });
 
       valentineBtn.addEventListener("click", () => {
         response.classList.remove("hidden");
         buttons.classList.remove("hidden");
         valentineBtn.classList.add("hidden");
-        music.play();
+        musicUploadContainer.classList.remove("hidden");
+        if (music.src) music.play();
       });
 
       document.getElementById("yes-btn").addEventListener("click", () => {
@@ -113,7 +196,9 @@
         result.classList.remove("hidden");
         buttons.classList.add("hidden");
         photos.classList.remove("hidden");
+        musicUploadContainer.classList.add("hidden");
         startHearts();
+        if (music.src) music.play();
       });
 
       document.getElementById("no-btn").addEventListener("click", () => {
@@ -121,15 +206,16 @@
         result.classList.remove("hidden");
         buttons.classList.add("hidden");
         stopHearts();
+        music.pause();
       });
 
       function createHearts() {
-        const numHearts = 5; // Reduced number of hearts
+        const numHearts = 5;
         for (let i = 0; i < numHearts; i++) {
           const heart = document.createElement("div");
           heart.classList.add("heart");
           heart.style.left = `${Math.random() * 100}vw`;
-          heart.style.animationDuration = `${Math.random() * 3 + 2}s`;
+          heart.style.animation = `heart-float ${Math.random() * 3 + 2}s linear infinite`;
           document.body.appendChild(heart);
 
           heart.addEventListener("animationend", () => {
@@ -140,8 +226,8 @@
 
       function startHearts() {
         if (!heartInterval) {
-          createHearts(); // Initial batch
-          heartInterval = setInterval(createHearts, 3000); // Every 3 seconds
+          createHearts();
+          heartInterval = setInterval(createHearts, 3000);
         }
       }
 
