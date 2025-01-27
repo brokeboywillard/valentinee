@@ -22,7 +22,7 @@
       max-width: 400px;
       margin: 0 auto;
       position: relative;
-      z-index: 1; /* Ensure container is above roses */
+      z-index: 1; /* Ensure container is above hearts */
     }
     h1 {
       font-size: 2em;
@@ -51,12 +51,12 @@
       font-size: 1.5em;
       margin-top: 20px;
     }
-    /* Floating roses */
-    .rose {
+    /* Floating hearts */
+    .heart {
       position: absolute;
-      width: 50px;
-      height: 50px;
-      background-image: url('https://www.transparentpng.com/thumb/rose/red-rose-png-0.png'); /* Replace with your rose image */
+      width: 30px;
+      height: 30px;
+      background-image: url('https://www.transparentpng.com/thumb/heart/heart-png-5.png'); /* Replace with your heart image */
       background-size: cover;
       animation: float 5s infinite ease-in-out;
     }
@@ -109,7 +109,7 @@
       document.getElementById("result").textContent = "Yay! You just made me the happiest person! 💖";
       document.getElementById("result").classList.remove("hidden");
       document.getElementById("buttons").classList.add("hidden");
-      createRoses(); // Add floating roses
+      createHearts(); // Add floating hearts
       document.getElementById("photos").classList.remove("hidden"); // Show photos
     });
 
@@ -120,150 +120,15 @@
       document.getElementById("buttons").classList.add("hidden");
     });
 
-    // Function to create floating roses
-    function createRoses() {
-      const numRoses = 20; // Number of roses
-      for (let i = 0; i < numRoses; i++) {
-        const rose = document.createElement("div");
-        rose.classList.add("rose");
-        rose.style.left = `${Math.random() * 100}vw`; // Random horizontal position
-        rose.style.animationDuration = `${Math.random() * 3 + 2}s`; // Random animation speed
-        document.body.appendChild(rose);
-      }
-    }
-  </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Will You Be My Valentine?</title>
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #ffebee;
-      color: #d32f2f;
-      text-align: center;
-      padding: 20px;
-      overflow: hidden; /* Prevent scrolling */
-      position: relative;
-    }
-    .container {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      max-width: 400px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1; /* Ensure container is above roses */
-    }
-    h1 {
-      font-size: 2em;
-      margin-bottom: 10px;
-    }
-    p {
-      font-size: 1.2em;
-    }
-    button {
-      background-color: #d32f2f;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 1em;
-      border-radius: 5px;
-      cursor: pointer;
-      margin: 10px;
-    }
-    button:hover {
-      background-color: #b71c1c;
-    }
-    .hidden {
-      display: none;
-    }
-    #result {
-      font-size: 1.5em;
-      margin-top: 20px;
-    }
-    /* Floating roses */
-    .rose {
-      position: absolute;
-      width: 50px;
-      height: 50px;
-      background-image: url('https://www.transparentpng.com/thumb/rose/red-rose-png-0.png'); /* Replace with your rose image */
-      background-size: cover;
-      animation: float 5s infinite ease-in-out;
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
-    }
-    /* Background music */
-    #music {
-      display: none;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Hey Beautiful! 💖</h1>
-    <p>I have a very important question for you...</p>
-    <button id="valentine-btn">Click Here!</button>
-    <p id="response" class="hidden">Will you be my Valentine? 💌</p>
-    <div id="buttons" class="hidden">
-      <button id="yes-btn">Yes! 😍</button>
-      <button id="no-btn">No 😢</button>
-    </div>
-    <p id="result" class="hidden"></p>
-  </div>
-
-  <!-- Background music -->
-  <audio id="music" controls loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"> <!-- Replace with your song -->
-    Your browser does not support the audio element.
-  </audio>
-
-  <!-- Photos -->
-  <div id="photos" class="hidden">
-    <img src="https://via.placeholder.com/150" alt="Photo 1"> <!-- Replace with your photo -->
-    <img src="https://via.placeholder.com/150" alt="Photo 2"> <!-- Replace with your photo -->
-  </div>
-
-  <script>
-    // Show response and buttons when "Click Here!" is clicked
-    document.getElementById("valentine-btn").addEventListener("click", () => {
-      document.getElementById("response").classList.remove("hidden");
-      document.getElementById("buttons").classList.remove("hidden");
-      document.getElementById("valentine-btn").classList.add("hidden");
-      document.getElementById("music").play(); // Play background music
-    });
-
-    // Handle "Yes" button click
-    document.getElementById("yes-btn").addEventListener("click", () => {
-      document.getElementById("result").textContent = "Yay! You just made me the happiest person! 💖";
-      document.getElementById("result").classList.remove("hidden");
-      document.getElementById("buttons").classList.add("hidden");
-      createRoses(); // Add floating roses
-      document.getElementById("photos").classList.remove("hidden"); // Show photos
-    });
-
-    // Handle "No" button click
-    document.getElementById("no-btn").addEventListener("click", () => {
-      document.getElementById("result").textContent = "Aww, I'll try harder next time! 😢";
-      document.getElementById("result").classList.remove("hidden");
-      document.getElementById("buttons").classList.add("hidden");
-    });
-
-    // Function to create floating roses
-    function createRoses() {
-      const numRoses = 20; // Number of roses
-      for (let i = 0; i < numRoses; i++) {
-        const rose = document.createElement("div");
-        rose.classList.add("rose");
-        rose.style.left = `${Math.random() * 100}vw`; // Random horizontal position
-        rose.style.animationDuration = `${Math.random() * 3 + 2}s`; // Random animation speed
-        document.body.appendChild(rose);
+    // Function to create floating hearts
+    function createHearts() {
+      const numHearts = 20; // Number of hearts
+      for (let i = 0; i < numHearts; i++) {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.style.left = `${Math.random() * 100}vw`; // Random horizontal position
+        heart.style.animationDuration = `${Math.random() * 3 + 2}s`; // Random animation speed
+        document.body.appendChild(heart);
       }
     }
   </script>
