@@ -214,6 +214,7 @@
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
         let player;
+
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', {
                 height: '0',
@@ -236,8 +237,8 @@
         }
 
         function onPlayerReady(event) {
-            // Unmute the video by default
-            event.target.unMute();
+            // Mute the video by default
+            event.target.mute();
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -259,6 +260,11 @@
                 document.body.style.background = "linear-gradient(45deg, #ff99cc, #ffb3d9)";
                 yesBtn.textContent = "YAY! You're My Valentine! 🎉";
                 noBtn.remove();
+                
+                // Unmute the video when "Yes" is clicked
+                if (player && player.unMute) {
+                    player.unMute();
+                }
             });
 
             noBtn.addEventListener('click', () => {
