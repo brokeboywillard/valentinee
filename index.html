@@ -116,15 +116,10 @@
         <h1>Will You Be My Valentine? 🐾💕</h1>
         
         <div class="photo-grid">
-            <!-- Romantic bouquet of flowers -->
             <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGhlYXJ0c3xlbnwwfHwwfHx8MA%3D%3D" 
                  class="photo" alt="Bouquet of Flowers">
-
-            <!-- Teddy bear with roses -->
             <img src="https://images.unsplash.com/photo-1484979045040-0ab3854b6acb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8dmFsZW50aW5lcyUyMGRheXxlbnwwfHwwfHx8MA%3D%3D" 
                  class="photo" alt="Teddy Bear with Roses">
-
-            <!-- Heart candle decorations -->
             <img src="https://images.unsplash.com/photo-1548544099-a89e27f73a84?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTcyfHx2YWxlbnRpbmVzfGVufDB8fDB8fHww" 
                  class="photo" alt="Heart Candles">
         </div>
@@ -143,6 +138,9 @@
     </div>
 
     <div class="hearts" id="heartsContainer"></div>
+
+    <!-- Hidden YouTube iframe container -->
+    <div id="playerContainer" class="hidden"></div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -186,6 +184,28 @@
                     heart.addEventListener('animationend', () => heart.remove());
                 }
             }
+
+            // YouTube Player API
+            let player;
+            const tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+            window.onYouTubeIframeAPIReady = () => {
+                player = new YT.Player('playerContainer', {
+                    videoId: 'vBy7FaapGRo',
+                    playerVars: {
+                        autoplay: 1,
+                        loop: 1,
+                        start: 38,
+                        playlist: 'vBy7FaapGRo'
+                    },
+                    events: {
+                        onReady: (event) => event.target.playVideo()
+                    }
+                });
+            };
         });
     </script>
 </body>
